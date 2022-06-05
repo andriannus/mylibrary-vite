@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply bg-gray-100;
+}
+
+.AppBar {
+  @apply bg-white flex items-center justify-between mobile:mb-md p-bs sticky;
+  @apply top-0 w-full z-10;
+
+  &-brand {
+    @apply cursor-default font-extrabold text-xl leading-6 select-none;
+  }
+}
+
+.Box {
+  @apply bg-white mobile:border border-gray-300 p-bs mobile:rounded-2xs;
+}
+
+.DefaultLayout {
+  @apply m-auto max-w-screen-md;
+}
+
+.Heading {
+  @apply font-bold text-base leading-5 text-gray-900;
+}
