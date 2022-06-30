@@ -10,8 +10,47 @@ html {
   @apply bg-white flex items-center justify-between mobile:mb-md p-bs sticky;
   @apply top-0 w-full z-10;
 
+  > {
+    :not(:last-child) {
+      @apply mr-xs;
+    }
+
+    :nth-child(2) {
+      @apply flex-grow;
+    }
+  }
+
+  &-backButton {
+    @apply flex h-md items-center justify-center outline-none rounded-full transition duration-300 w-md;
+
+    -webkit-tap-highlight-color: transparent;
+
+    &:active,
+    &:focus {
+      @apply bg-gray-300;
+    }
+
+    &:disabled {
+      &.AppBar-backButton {
+        &:active,
+        &:focus {
+          @apply bg-transparent;
+        }
+      }
+
+      @apply cursor-not-allowed;
+    }
+  }
+
   &-brand {
     @apply cursor-default font-extrabold text-xl leading-6 select-none;
+  }
+
+  &-title {
+    @apply flex-grow select-none text-gray-900;
+
+    font-size: 20px;
+    line-height: 27px;
   }
 }
 
@@ -25,4 +64,15 @@ html {
 
 .Heading {
   @apply font-bold text-base leading-5 text-gray-900;
+}
+
+.Link {
+  @apply cursor-pointer outline-none select-none text-ruby-500 text-xs;
+
+  -webkit-tap-highlight-color: transparent;
+
+  &:active,
+  &:focus {
+    @apply text-ruby-200;
+  }
 }
