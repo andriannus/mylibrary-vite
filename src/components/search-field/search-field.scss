@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Search {
+  @apply bg-gray-100 flex p-xs rounded-xs w-full;
+
+  :first-child {
+    @apply mr-xs;
+  }
+
+  &-field {
+    width: calc(100% - 40px);
+  }
+
+  &-icon {
+    @apply h-md p-2xs text-ruby-500 w-md;
+  }
+
+  &-input {
+    @apply bg-transparent outline-none text-sm leading-5 w-full;
+
+    &::placeholder {
+      @apply text-gray-700;
+    }
+  }
+}
