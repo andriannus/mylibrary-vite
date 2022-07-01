@@ -10,13 +10,34 @@ export const BookAdd = /*html*/ `
   >
     <img src="${PrevIcon}" alt="Previous" />
   </a>
-
-  <span class="AppBar-title">Tambah Buku</span>
 </header>
 
 <main>
   <div class="Box">
-    <p class="text-xs text-center">Tidak ada data</p>
+    <div class="pb-sm px-sm mobile:pb-0 mobile:px-0">
+      <div class="flex items-center justify-between mb-md">
+        <p class="Heading">Tambah buku</p>
+      </div>
+
+      <form>
+        <text-field
+          id="TxtBookTitle"
+          class="mb-md"
+          placeholder="Judul buku"
+        ></text-field>
+
+        <text-field
+          id="TxtAuthor"
+          class="mb-md"
+          placeholder="Penulis"
+        ></text-field>
+
+        <text-field
+          id="TxtYearOfPublication"
+          placeholder="Tahun terbit"
+        ></text-field>
+      </form>
+    </div>
   </div>
 </main>
 `;

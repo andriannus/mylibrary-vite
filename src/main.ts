@@ -1,5 +1,6 @@
 import { routes } from "./routes";
 import "./components/search-field";
+import "./components/text-field";
 import "./style.scss";
 
 interface NavigateParams {
