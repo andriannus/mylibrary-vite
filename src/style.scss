@@ -58,6 +58,110 @@ html {
   @apply bg-white mobile:border border-gray-300 p-bs mobile:rounded-2xs;
 }
 
+.Button {
+  @apply bg-white border border-gray-300 flex font-bold items-center;
+  @apply justify-center outline-none px-bs py-sm rounded-xs select-none;
+  @apply text-center text-gray-700 transition duration-300;
+
+  -webkit-tap-highlight-color: transparent;
+
+  &:active,
+  &:hover,
+  &:focus {
+    @apply border-ruby-500 text-ruby-500;
+  }
+
+  &:active,
+  &:focus {
+    @apply ring ring-red-200;
+  }
+
+  &:focus {
+    @apply bg-ruby-100;
+  }
+
+  &--fullWidth {
+    width: 100%;
+  }
+
+  &.Button--primary {
+    @apply bg-ruby-500 border-0 text-white;
+
+    &:hover {
+      @apply bg-ruby-400 border-ruby-400 text-white;
+    }
+
+    &:focus {
+      @apply bg-ruby-600 border-ruby-600;
+    }
+  }
+
+  &.Button--success {
+    @apply bg-green-500 border-green-500 text-white;
+
+    &:active,
+    &:focus {
+      @apply ring ring-green-200;
+    }
+
+    &:hover {
+      @apply bg-green-400 border-green-400 text-white;
+    }
+
+    &:focus {
+      @apply bg-green-600 border-green-600;
+    }
+
+    &.Button--outlined {
+      @apply bg-white border border-green-500 text-green-500;
+
+      &:hover {
+        @apply bg-green-500 text-white;
+      }
+    }
+  }
+
+  &:disabled {
+    &.Button--primary,
+    &.Button--outlined,
+    &.Button--primary.Button--outlined {
+      &:hover {
+        @apply bg-gray-300 border-gray-300 text-white cursor-not-allowed;
+      }
+
+      &:active,
+      &:focus {
+        @apply ring-0;
+      }
+
+      @apply bg-gray-300 border-gray-300 text-white cursor-not-allowed;
+    }
+  }
+}
+
+.ButtonGroup {
+  @apply flex;
+
+  height: 46px;
+
+  .Button {
+    @apply rounded-none;
+
+    &:first-child {
+      @apply rounded-l-xs;
+    }
+
+    &:last-child {
+      @apply rounded-r-xs;
+    }
+
+    &:focus,
+    &:hover {
+      z-index: 1;
+    }
+  }
+}
+
 .DefaultLayout {
   @apply m-auto max-w-screen-md;
 }
