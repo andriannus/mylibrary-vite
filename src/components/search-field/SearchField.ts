@@ -27,7 +27,7 @@ class SearchField extends HTMLElement {
       </div>
     `;
 
-    const shadowRoot = this.attachShadow({ mode: "open" });
+    const shadowRoot = this.attachShadow({ mode: "closed" });
     shadowRoot.appendChild(style);
     shadowRoot.appendChild(template.content.cloneNode(true));
   }
