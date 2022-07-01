@@ -1,7 +1,7 @@
 import PrevIcon from "./assets/icons/previous.png";
 
 export const BookAlreadyRead = /*html*/ `
-<header class="AppBar">
+<header class="AppBar mb-md">
   <a
     aria-label="Back"
     href="/"
