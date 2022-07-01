@@ -58,12 +58,13 @@ const app = document.querySelector<HTMLDivElement>("#app");
 function showCurrentPage(): void {
   if (!app) return;
 
+  const { component, onMount } = routes[window.location.pathname];
+
   app.innerHTML = `
-    <div class="DefaultLayout">
-      ${routes[window.location.pathname]}
-    </div>
+    <div class="DefaultLayout">${component}</div>
   `;
 
+  onMount && onMount();
   handleAnchorElements();
 }
 

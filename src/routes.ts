@@ -1,13 +1,22 @@
-import { BookAdd } from "./book-add";
+import { BookAdd, bookAddMounted } from "./book-add";
 import { BookAlreadyRead } from "./book-already-read";
 import { BookUnread } from "./book-unread";
 import { Home } from "./home";
 
-type Routes = Record<string, string>;
+type Routes = Record<
+  string,
+  {
+    component: string;
+    onMount?: () => void;
+  }
+>;
 
 export const routes: Routes = {
-  "/": Home,
-  "/add": BookAdd,
-  "/already-read": BookAlreadyRead,
-  "/unread": BookUnread,
+  "/": { component: Home },
+  "/add": {
+    component: BookAdd,
+    onMount: bookAddMounted,
+  },
+  "/already-read": { component: BookAlreadyRead },
+  "/unread": { component: BookUnread },
 };
