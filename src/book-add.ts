@@ -1,8 +1,15 @@
 import PrevIcon from "./assets/icons/previous.png";
 
-const BUTTON_DEACTIVE_CLASS = "Button--outlined";
+const textFieldKeys: Record<number, string> = {
+  0: "title",
+  1: "author",
+  2: "year",
+};
 
 const payload: Record<string, string | boolean | number | null> = {
+  title: "",
+  author: "",
+  year: null,
   isComplete: null,
 };
 
@@ -10,21 +17,49 @@ export function bookAddMounted(): void {
   const buttons = document.querySelectorAll<HTMLButtonElement>(
     ".ButtonGroup .Button",
   );
+  const BUTTON_DEACTIVE_CLASS = "Button--outlined";
 
   if (buttons.length < 1) return;
 
   buttons.forEach((button, index) => {
     button.addEventListener("click", () => {
-      const value = parseInt(button.getAttribute("data-value") ?? "");
-      payload.isComplete = value;
+      payload.isComplete = button.getAttribute("data-value");
 
       for (let i = 0; i < buttons.length; i += 1) {
         buttons[i].classList.add(BUTTON_DEACTIVE_CLASS);
       }
 
       buttons[index].classList.remove(BUTTON_DEACTIVE_CLASS);
+      onFormChanges();
     });
   });
+
+  const textFields = document.querySelectorAll<HTMLElement>("text-field");
+
+  textFields.forEach((textField, key) => {
+    textField.addEventListener("onChange", ((value: CustomEvent) => {
+      payload[textFieldKeys[key]] = value.detail;
+      onFormChanges();
+    }) as EventListener);
+  });
+
+  const form = document.querySelector<HTMLFormElement>("#FrmAddBook");
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    console.log(payload);
+  });
+
+  function onFormChanges(): void {
+    const paylodValues = Object.values(payload);
+    const isFormValid = paylodValues.every((value) => !!value);
+    const submitButton = document.querySelector("#BtnSubmit");
+
+    if (isFormValid) {
+      submitButton?.removeAttribute("disabled");
+    } else {
+      submitButton?.setAttribute("disabled", "");
+    }
+  }
 }
 
 export const BookAdd = /*html*/ `
@@ -46,7 +81,7 @@ export const BookAdd = /*html*/ `
         <p class="Heading">Tambah buku</p>
       </div>
 
-      <form>
+      <form id="FrmAddBook">
         <text-field
           id="TxtBookTitle"
           class="mb-md"
@@ -62,6 +97,7 @@ export const BookAdd = /*html*/ `
         <text-field
           id="TxtYearOfPublication"
           class="mb-md"
+          type="number"
           placeholder="Tahun terbit"
         ></text-field>
 
@@ -84,8 +120,10 @@ export const BookAdd = /*html*/ `
         </div>
         
         <button
+          id="BtnSubmit"
           class="Button Button--fullWidth Button--primary"
-          type="button"
+          disabled
+          type="submit"
         >
           Simpan
         </button>
