@@ -1,12 +1,30 @@
 import scss from "./text-field.scss";
 
 class TextField extends HTMLElement {
-  get placeholder() {
+  private input: HTMLInputElement;
+  private template: HTMLTemplateElement;
+
+  private _value: string;
+
+  private get placeholder(): string {
     return this.getAttribute("placeholder") ?? "";
   }
 
-  get type() {
+  private get type(): string {
     return this.getAttribute("type") ?? "text";
+  }
+
+  private get value(): string {
+    if (this.hasAttribute("value")) {
+      return this.getAttribute("value") ?? "";
+    } else {
+      return this._value;
+    }
+  }
+
+  private set value(value: string) {
+    this._value = value;
+    this.dispatchEvent(new CustomEvent("onChange", { detail: this._value }));
   }
 
   constructor() {
@@ -15,8 +33,10 @@ class TextField extends HTMLElement {
     const style = document.createElement("style");
     style.innerHTML = scss;
 
-    const template = document.createElement("template");
-    template.innerHTML = `
+    this._value = "";
+
+    this.template = document.createElement("template");
+    this.template.innerHTML = `
       <div class=${this.className}>
         <input
           id="${this.id}"
@@ -28,9 +48,18 @@ class TextField extends HTMLElement {
       </div>
     `;
 
-    const shadowRoot = this.attachShadow({ mode: "closed" });
-    shadowRoot.appendChild(style);
-    shadowRoot.appendChild(template.content.cloneNode(true));
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot?.appendChild(style);
+    this.shadowRoot?.appendChild(this.template.content.cloneNode(true));
+
+    this.input = this.shadowRoot?.querySelector("input") as HTMLInputElement;
+  }
+
+  connectedCallback(): void {
+    this.input?.addEventListener("input", (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      this.value = value;
+    });
   }
 }
 
