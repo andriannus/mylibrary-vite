@@ -1,12 +1,26 @@
-import PrevIcon from "./assets/icons/previous.png";
+import { nanoid } from "nanoid";
 
-const textFieldKeys: Record<number, string> = {
+import PrevIcon from "./assets/icons/previous.png";
+import { IBook } from "./models/book.model";
+import { saveBook } from "./stores/book";
+import { useRouter } from "./utils/router";
+
+interface State {
+  author: string;
+  isComplete: string | null;
+  title: string;
+  year: string | null;
+}
+
+const router = useRouter();
+
+const textFieldKeys: Record<number, keyof State> = {
   0: "title",
   1: "author",
   2: "year",
 };
 
-const payload: Record<string, string | boolean | number | null> = {
+const state: State = {
   title: "",
   author: "",
   year: null,
@@ -23,34 +37,34 @@ export function bookAddMounted(): void {
 
   buttons.forEach((button, index) => {
     button.addEventListener("click", () => {
-      payload.isComplete = button.getAttribute("data-value");
+      state.isComplete = button.getAttribute("data-value");
 
       for (let i = 0; i < buttons.length; i += 1) {
         buttons[i].classList.add(BUTTON_DEACTIVE_CLASS);
       }
 
       buttons[index].classList.remove(BUTTON_DEACTIVE_CLASS);
-      onFormChanges();
+      handleFormChanges();
     });
   });
 
-  const textFields = document.querySelectorAll<HTMLElement>("text-field");
+  const textFields = document.querySelectorAll("text-field");
 
   textFields.forEach((textField, key) => {
     textField.addEventListener("onChange", ((value: CustomEvent) => {
-      payload[textFieldKeys[key]] = value.detail;
-      onFormChanges();
+      state[textFieldKeys[key]] = value.detail;
+      handleFormChanges();
     }) as EventListener);
   });
 
   const form = document.querySelector<HTMLFormElement>("#FrmAddBook");
   form?.addEventListener("submit", (event) => {
     event.preventDefault();
-    console.log(payload);
+    handleSubmit();
   });
 
-  function onFormChanges(): void {
-    const paylodValues = Object.values(payload);
+  function handleFormChanges(): void {
+    const paylodValues: (string | null)[] = Object.values(state);
     const isFormValid = paylodValues.every((value) => !!value);
     const submitButton = document.querySelector("#BtnSubmit");
 
@@ -59,6 +73,21 @@ export function bookAddMounted(): void {
     } else {
       submitButton?.setAttribute("disabled", "");
     }
+  }
+
+  function handleSubmit(): void {
+    const isComplete = (state.isComplete as string) === "1";
+    const book: IBook = {
+      ...state,
+      isComplete,
+      id: nanoid(10),
+      year: parseInt(state.year as string),
+    };
+
+    saveBook(book);
+
+    const nextPath = isComplete ? "/already-read" : "/unread";
+    router.push(nextPath);
   }
 }
 
@@ -103,6 +132,7 @@ export const BookAdd = /*html*/ `
 
         <div class="ButtonGroup mb-md" role="group">
           <button
+            id="BtnIsBeingRead"
             data-value="0"
             class="Button Button--success Button--outlined Button--fullWidth"
             type="button"
@@ -111,6 +141,7 @@ export const BookAdd = /*html*/ `
           </button>
 
           <button
+            id="BtnAlreadyRead"
             data-value="1"
             class="Button Button--success Button--outlined Button--fullWidth"
             type="button"
