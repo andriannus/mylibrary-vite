@@ -1,6 +1,6 @@
 import { BookAdd, bookAddMounted } from "./book-add";
 import { BookAlreadyRead } from "./book-already-read";
-import { BookUnread } from "./book-unread";
+import { BookUnread, bookUnreadMounted } from "./book-unread";
 import { Home } from "./home";
 
 type Routes = Record<
@@ -18,5 +18,8 @@ export const routes: Routes = {
     onMount: bookAddMounted,
   },
   "/already-read": { component: BookAlreadyRead },
-  "/unread": { component: BookUnread },
+  "/unread": {
+    component: BookUnread,
+    onMount: bookUnreadMounted,
+  },
 };
