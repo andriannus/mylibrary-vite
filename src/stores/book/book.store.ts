@@ -4,6 +4,23 @@ import { useLocalStorage } from "../../utils/local-storage";
 
 const ls = useLocalStorage();
 
+export function getBook(bookId: string): IBook | null {
+  if (!ls.isExist(MLA_BOOKS)) return null;
+
+  const books = ls.get<IBook[]>(MLA_BOOKS) as IBook[];
+  const selectedBook = books.find((book) => book.id === bookId) ?? null;
+
+  return selectedBook;
+}
+
+export function getBooks(): IBook[] {
+  if (ls.isExist(MLA_BOOKS)) {
+    return ls.get<IBook[]>(MLA_BOOKS) as IBook[];
+  } else {
+    return [];
+  }
+}
+
 export function saveBook(book: IBook): void {
   if (ls.isExist(MLA_BOOKS)) {
     const books = ls.get<IBook[]>(MLA_BOOKS) as IBook[];
@@ -13,4 +30,12 @@ export function saveBook(book: IBook): void {
   } else {
     ls.set(MLA_BOOKS, [book]);
   }
+}
+
+export function deleteBook(bookId: string): void {
+  const books = ls.get<IBook[]>(MLA_BOOKS) as IBook[];
+  const selectedBookIdx = books.findIndex((book) => book.id === bookId) ?? null;
+
+  books.splice(selectedBookIdx, 1);
+  ls.set(MLA_BOOKS, books);
 }
