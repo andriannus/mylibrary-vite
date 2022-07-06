@@ -21,7 +21,8 @@ html {
   }
 
   &-backButton {
-    @apply flex h-md items-center justify-center outline-none rounded-full transition duration-300 w-md;
+    @apply flex h-md items-center justify-center outline-none rounded-full;
+    @apply transition duration-300 w-md;
 
     -webkit-tap-highlight-color: transparent;
 
@@ -82,6 +83,10 @@ html {
 
   &--fullWidth {
     width: 100%;
+  }
+
+  &--small {
+    @apply px-sm py-2xs text-xs;
   }
 
   &.Button--primary {
@@ -178,5 +183,54 @@ html {
   &:active,
   &:focus {
     @apply text-ruby-200;
+  }
+}
+
+.List {
+  @apply border border-gray-300 rounded-2xs select-none;
+
+  &-actions {
+    @apply flex w-full mt-xs;
+  }
+
+  &-action {
+    @extend .Button;
+    @extend .Button--primary;
+    @extend .Button--small;
+
+    &:not(:last-child) {
+      @apply mr-xs;
+    }
+
+    &--success {
+      @extend .Button--success;
+    }
+  }
+
+  &-item {
+    @apply flex flex-col items-center justify-between outline-none px-bs py-sm transition duration-300;
+
+    -webkit-tap-highlight-color: transparent;
+
+    &:not(:last-child) {
+      @apply border-b border-gray-300;
+    }
+
+    &:active,
+    &:focus {
+      @apply bg-ruby-100;
+    }
+
+    &Content {
+      @apply w-full;
+    }
+
+    &Subtitle {
+      @apply text-xs;
+    }
+
+    &Title {
+      @apply font-semibold text-gray-900 text-sm;
+    }
   }
 }
