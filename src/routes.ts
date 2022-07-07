@@ -1,7 +1,7 @@
 import { BookAdd, bookAddMounted } from "./book-add";
 import { BookAlreadyRead, bookAlreadyReadMounted } from "./book-already-read";
 import { BookUnread, bookUnreadMounted } from "./book-unread";
-import { Home } from "./home";
+import { Home, homeMounted } from "./home";
 
 type Routes = Record<
   string,
@@ -12,7 +12,10 @@ type Routes = Record<
 >;
 
 export const routes: Routes = {
-  "/": { component: Home },
+  "/": {
+    component: Home,
+    onMount: homeMounted,
+  },
   "/add": {
     component: BookAdd,
     onMount: bookAddMounted,
