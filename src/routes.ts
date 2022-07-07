@@ -1,5 +1,5 @@
 import { BookAdd, bookAddMounted } from "./book-add";
-import { BookAlreadyRead } from "./book-already-read";
+import { BookAlreadyRead, bookAlreadyReadMounted } from "./book-already-read";
 import { BookUnread, bookUnreadMounted } from "./book-unread";
 import { Home } from "./home";
 
@@ -17,7 +17,10 @@ export const routes: Routes = {
     component: BookAdd,
     onMount: bookAddMounted,
   },
-  "/already-read": { component: BookAlreadyRead },
+  "/already-read": {
+    component: BookAlreadyRead,
+    onMount: bookAlreadyReadMounted,
+  },
   "/unread": {
     component: BookUnread,
     onMount: bookUnreadMounted,
