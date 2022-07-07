@@ -29,11 +29,7 @@ function renderBooks(type: BookType, books: IBook[]): void {
         type === BookType.Unread ? "Belum selesai dibaca" : "Selesai dibaca"
       }</p>
 
-      ${
-        books.length > 5
-          ? `<a class="Link" href="/${type}">Lihat lebih banyak</a>`
-          : ""
-      }
+      <a class="Link" href="/${type}">Lihat lebih banyak</a>
     </div>
   `;
 
