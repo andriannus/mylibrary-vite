@@ -72,7 +72,10 @@ export const BookAlreadyRead = /*html*/ `
   <div class="Box mb-md">
     <div class="flex items-center justify-between mb-bs">
       <p class="Heading">Menampilkan buku</p>
-      <a class="Link" href="/add">Tambah buku</a>
+      
+      <a class="Link" href="/add" data-back-route="/already-read">
+        Tambah buku
+      </a>
     </div>
     
     <div id="DpyAlreadyReadBooks"></div>

@@ -1,4 +1,5 @@
 import { routes } from "../../routes";
+import { setBackRoute } from "../../stores/router";
 import { RouterHook } from "./router.model";
 
 export function useRouter(): RouterHook {
@@ -18,14 +19,15 @@ export function useRouter(): RouterHook {
 
       anchorElements.forEach((anchorElement) => {
         const href = anchorElement.getAttribute("href") ?? "/";
+        const backRoute = anchorElement.getAttribute("data-back-route");
 
         anchorElement.addEventListener("click", (event: Event) => {
           event.preventDefault();
 
-          const isBackButton = selector === ".AppBar-backButton";
+          backRoute && setBackRoute(backRoute);
 
+          const isBackButton = selector === ".AppBar-backButton";
           isBackButton ? replace(href) : push(href);
-          show();
         });
       });
     });

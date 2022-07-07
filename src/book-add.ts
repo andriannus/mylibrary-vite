@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import PrevIcon from "./assets/icons/previous.png";
 import { IBook } from "./models/book.model";
 import { saveBook } from "./stores/book";
+import { getBackRoute, removeBackRouteIfExist } from "./stores/router";
 import { useRouter } from "./utils/router";
 
 interface State {
@@ -28,6 +29,14 @@ const state: State = {
 };
 
 export function bookAddMounted(): void {
+  const backButton = document.querySelector(
+    ".AppBar-backButton",
+  ) as HTMLAnchorElement;
+
+  backButton.href = getBackRoute();
+
+  removeBackRouteIfExist();
+
   const buttons = document.querySelectorAll<HTMLButtonElement>(
     ".ButtonGroup .Button",
   );
