@@ -15,7 +15,8 @@ export function getBook(bookId: string): IBook | null {
 
 export function getBooks(): IBook[] {
   if (ls.isExist(MLA_BOOKS)) {
-    return ls.get<IBook[]>(MLA_BOOKS) as IBook[];
+    const books = ls.get<IBook[]>(MLA_BOOKS) as IBook[];
+    return books.reverse();
   } else {
     return [];
   }
