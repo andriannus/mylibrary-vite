@@ -34,9 +34,27 @@ export function saveBook(book: IBook): void {
 }
 
 export function deleteBook(bookId: string): void {
-  const books = ls.get<IBook[]>(MLA_BOOKS) as IBook[];
-  const selectedBookIdx = books.findIndex((book) => book.id === bookId) ?? null;
+  const books = getBooks();
+  const selectedBookIdx = books.findIndex((book) => book.id === bookId);
 
   books.splice(selectedBookIdx, 1);
+  ls.set(MLA_BOOKS, books);
+}
+
+export function setBookAsAlreadyRead(bookId: string): void {
+  const books = getBooks();
+  const selectedBookIdx = books.findIndex((book) => book.id === bookId);
+
+  books[selectedBookIdx].isComplete = true;
+
+  ls.set(MLA_BOOKS, books);
+}
+
+export function setBookAsUnread(bookId: string): void {
+  const books = getBooks();
+  const selectedBookIdx = books.findIndex((book) => book.id === bookId);
+
+  books[selectedBookIdx].isComplete = false;
+
   ls.set(MLA_BOOKS, books);
 }
