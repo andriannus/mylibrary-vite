@@ -1,21 +1,41 @@
 import PrevIcon from "./assets/icons/previous.png";
-import { getBooks } from "./stores/book";
+import { getBooks, setBookAsAlreadyRead } from "./stores/book";
 
 export function bookUnreadMounted(): void {
+  handleUnreadBooksContent();
+}
+
+function handleAlreadyReadBookButton(): void {
+  const alreadyReadButtons = document.querySelectorAll<HTMLButtonElement>(
+    "[id*='BtnSetAsAlreadyRead']",
+  );
+
+  alreadyReadButtons.forEach((alreadyReadButton) => {
+    alreadyReadButton.addEventListener("click", () => {
+      setBookAsAlreadyRead(
+        alreadyReadButton.getAttribute("data-book-id") as string,
+      );
+
+      handleUnreadBooksContent();
+    });
+  });
+}
+
+function handleUnreadBooksContent(): void {
   const container = document.querySelector("#DpyUnreadBooks") as HTMLDivElement;
 
   const books = getBooks();
   const unreadBooks = books.filter((book) => !book.isComplete);
 
   if (unreadBooks.length < 1) {
-    container.outerHTML = `
+    container.innerHTML = `
       <p class="text-xs text-center">Tidak ada data</p>
     `;
   } else {
-    container.outerHTML = `
+    container.innerHTML = `
       <ul class="List">
         ${unreadBooks
-          .map((unreadBook) => {
+          .map((unreadBook, index) => {
             return `
             <li class="List-item">
               <div class="List-itemContent">
@@ -27,11 +47,16 @@ export function bookUnreadMounted(): void {
               </div>
 
               <div class="List-actions">
-                <button class="List-action List-action--success" type="button">
+                <button
+                  id="BtnSetAsAlreadyRead${index}"
+                  class="List-action List-action--success"
+                  type="button"
+                  data-book-id="${unreadBook.id}"
+                >
                   Selesai dibaca
                 </button>
 
-                <button class="List-action" type="button">
+                <button id="BtnDeleteBook" class="List-action" type="button">
                   Hapus buku
                 </button>
               </div>
@@ -41,6 +66,8 @@ export function bookUnreadMounted(): void {
           .join("")}
       </ul>
     `;
+
+    handleAlreadyReadBookButton();
   }
 }
 

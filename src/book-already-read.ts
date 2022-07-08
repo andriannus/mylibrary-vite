@@ -1,7 +1,24 @@
 import PrevIcon from "./assets/icons/previous.png";
-import { getBooks } from "./stores/book";
+import { getBooks, setBookAsUnread } from "./stores/book";
 
 export function bookAlreadyReadMounted(): void {
+  handleAlreadyReadBooksContent();
+}
+
+function handleUnreadBookButton(): void {
+  const alreadyReadButtons = document.querySelectorAll<HTMLButtonElement>(
+    "[id*='BtnSetAsUnread']",
+  );
+
+  alreadyReadButtons.forEach((alreadyReadButton) => {
+    alreadyReadButton.addEventListener("click", () => {
+      setBookAsUnread(alreadyReadButton.getAttribute("data-book-id") as string);
+      handleAlreadyReadBooksContent();
+    });
+  });
+}
+
+function handleAlreadyReadBooksContent(): void {
   const container = document.querySelector(
     "#DpyAlreadyReadBooks",
   ) as HTMLDivElement;
@@ -10,14 +27,14 @@ export function bookAlreadyReadMounted(): void {
   const alreadyReadBooks = books.filter((book) => book.isComplete);
 
   if (alreadyReadBooks.length < 1) {
-    container.outerHTML = `
+    container.innerHTML = `
       <p class="text-xs text-center">Tidak ada data</p>
     `;
   } else {
-    container.outerHTML = `
+    container.innerHTML = `
       <ul class="List">
         ${alreadyReadBooks
-          .map((alreadyReadBook) => {
+          .map((alreadyReadBook, index) => {
             return `
             <li class="List-item">
               <div class="List-itemContent">
@@ -29,7 +46,12 @@ export function bookAlreadyReadMounted(): void {
               </div>
 
               <div class="List-actions">
-                <button class="List-action List-action--success" type="button">
+                <button
+                  id="BtnSetAsUnread${index}"
+                  class="List-action List-action--success"
+                  type="button"
+                  data-book-id="${alreadyReadBook.id}"
+                >
                   Belum selesai dibaca
                 </button>
 
@@ -43,6 +65,8 @@ export function bookAlreadyReadMounted(): void {
           .join("")}
       </ul>
     `;
+
+    handleUnreadBookButton();
   }
 }
 
