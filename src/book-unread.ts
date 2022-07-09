@@ -1,5 +1,5 @@
 import PrevIcon from "./assets/icons/previous.png";
-import { getBooks, setBookAsAlreadyRead } from "./stores/book";
+import { deleteBook, getBooks, setBookAsAlreadyRead } from "./stores/book";
 
 export function bookUnreadMounted(): void {
   handleUnreadBooksContent();
@@ -16,6 +16,18 @@ function handleAlreadyReadBookButton(): void {
         alreadyReadButton.getAttribute("data-book-id") as string,
       );
 
+      handleUnreadBooksContent();
+    });
+  });
+}
+
+function handleDeleteBookButton(): void {
+  const deleteButtons =
+    document.querySelectorAll<HTMLButtonElement>("[id*='BtnDelete']");
+
+  deleteButtons.forEach((alreadyReadButton) => {
+    alreadyReadButton.addEventListener("click", () => {
+      deleteBook(alreadyReadButton.getAttribute("data-book-id") as string);
       handleUnreadBooksContent();
     });
   });
@@ -56,7 +68,12 @@ function handleUnreadBooksContent(): void {
                   Selesai dibaca
                 </button>
 
-                <button id="BtnDeleteBook" class="List-action" type="button">
+                <button 
+                  id="BtnDelete${index}"
+                  class="List-action"
+                  type="button"
+                  data-book-id="${unreadBook.id}"
+                >
                   Hapus buku
                 </button>
               </div>
@@ -68,6 +85,7 @@ function handleUnreadBooksContent(): void {
     `;
 
     handleAlreadyReadBookButton();
+    handleDeleteBookButton();
   }
 }
 
@@ -94,7 +112,7 @@ export const BookUnread = /*html*/ `
     <search-field placeholder="Masukkan nama buku"></search-field>
   </div>
 
-  <div class="Box mb-md">
+  <div class="Box">
     <div class="flex items-center justify-between mb-bs">
       <p class="Heading">Menampilkan buku</p>
 
