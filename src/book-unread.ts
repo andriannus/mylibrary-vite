@@ -1,4 +1,5 @@
 import PrevIcon from "./assets/icons/previous.png";
+import { DeleteBookDialog, SuccessToast } from "./components/swal";
 import { deleteBook, getBooks, setBookAsAlreadyRead } from "./stores/book";
 
 export function bookUnreadMounted(): void {
@@ -17,6 +18,7 @@ function handleAlreadyReadBookButton(): void {
       );
 
       handleUnreadBooksContent();
+      SuccessToast("Buku selesai dibaca");
     });
   });
 }
@@ -26,9 +28,14 @@ function handleDeleteBookButton(): void {
     document.querySelectorAll<HTMLButtonElement>("[id*='BtnDelete']");
 
   deleteButtons.forEach((alreadyReadButton) => {
-    alreadyReadButton.addEventListener("click", () => {
-      deleteBook(alreadyReadButton.getAttribute("data-book-id") as string);
-      handleUnreadBooksContent();
+    alreadyReadButton.addEventListener("click", async () => {
+      const result = await DeleteBookDialog();
+
+      if (result.isConfirmed) {
+        deleteBook(alreadyReadButton.getAttribute("data-book-id") as string);
+        handleUnreadBooksContent();
+        SuccessToast("Buku berhasil dihapus");
+      }
     });
   });
 }

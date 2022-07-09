@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 
 import PrevIcon from "./assets/icons/previous.png";
+import { SuccessToast } from "./components/swal";
 import { IBook } from "./models/book.model";
 import { saveBook } from "./stores/book";
 import { getBackRoute, removeBackRouteIfExist } from "./stores/router";
@@ -94,6 +95,7 @@ export function bookAddMounted(): void {
     };
 
     saveBook(book);
+    SuccessToast("Buku berhasil ditambah");
 
     const nextPath = isComplete ? "/already-read" : "/unread";
     router.push(nextPath);
