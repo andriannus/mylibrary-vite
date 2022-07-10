@@ -4,6 +4,10 @@ import { useLocalStorage } from "../../utils/local-storage";
 
 const ls = useLocalStorage();
 
+function sortBooks(books: IBook[]): IBook[] {
+  return books.sort((a, b) => b.createdAt - a.createdAt);
+}
+
 export function getBook(bookId: string): IBook | null {
   if (!ls.isExist(MLA_BOOKS)) return null;
 
@@ -16,7 +20,7 @@ export function getBook(bookId: string): IBook | null {
 export function getBooks(): IBook[] {
   if (ls.isExist(MLA_BOOKS)) {
     const books = ls.get<IBook[]>(MLA_BOOKS) as IBook[];
-    const sortedBooks = books.sort((a, b) => b.createdAt - a.createdAt);
+    const sortedBooks = sortBooks(books);
 
     return sortedBooks;
   } else {
@@ -41,6 +45,16 @@ export function deleteBook(bookId: string): void {
 
   books.splice(selectedBookIdx, 1);
   ls.set(MLA_BOOKS, books);
+}
+
+export function searchBook(title: string): IBook[] {
+  const books = getBooks();
+  const searchedBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(title.toLowerCase()),
+  );
+  const sortedBooks = sortBooks(searchedBooks);
+
+  return sortedBooks;
 }
 
 export function setBookAsAlreadyRead(bookId: string): void {

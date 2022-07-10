@@ -1,11 +1,27 @@
 import PrevIcon from "./assets/icons/previous.png";
 import { DeleteBookDialog, SuccessToast } from "./components/swal";
-import { deleteBook, getBooks, setBookAsUnread } from "./stores/book";
+import { IBook } from "./models/book.model";
+import {
+  deleteBook,
+  getBooks,
+  searchBook,
+  setBookAsUnread,
+} from "./stores/book";
+import { debounce } from "./utils/debounce";
 
 export function bookAlreadyReadMounted(): void {
   document.title = "Daftar Suku Selesai Dibaca | myLibrary";
   handleAlreadyReadBooksContent();
+
+  const searchField = document.querySelector("search-field") as HTMLElement;
+
+  searchField.addEventListener("onChange", handleSearchChanges);
 }
+
+const handleSearchChanges = debounce((value: CustomEvent<string>) => {
+  const searchedBooks = searchBook(value.detail);
+  handleAlreadyReadBooksContent(searchedBooks);
+}, 200);
 
 function handleUnreadBookButton(): void {
   const alreadyReadButtons = document.querySelectorAll<HTMLButtonElement>(
@@ -38,12 +54,12 @@ function handleDeleteBookButton(): void {
   });
 }
 
-function handleAlreadyReadBooksContent(): void {
+function handleAlreadyReadBooksContent(searchedBooks?: IBook[]): void {
   const container = document.querySelector(
     "#DpyAlreadyReadBooks",
   ) as HTMLDivElement;
 
-  const books = getBooks();
+  const books = searchedBooks ?? getBooks();
   const alreadyReadBooks = books.filter((book) => book.isComplete);
 
   if (alreadyReadBooks.length < 1) {
