@@ -3,6 +3,7 @@ import { DeleteBookDialog, SuccessToast } from "./components/swal";
 import { deleteBook, getBooks, setBookAsAlreadyRead } from "./stores/book";
 
 export function bookUnreadMounted(): void {
+  document.title = "Daftar Buku Belum Selesai Dibaca | myLibrary";
   handleUnreadBooksContent();
 }
 

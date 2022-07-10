@@ -30,6 +30,8 @@ const state: State = {
 };
 
 export function bookAddMounted(): void {
+  document.title = "Tambah Buku | myLibrary";
+
   const backButton = document.querySelector(
     ".AppBar-backButton",
   ) as HTMLAnchorElement;
@@ -58,7 +60,7 @@ export function bookAddMounted(): void {
     });
   });
 
-  const textFields = document.querySelectorAll("text-field");
+  const textFields = document.querySelectorAll<HTMLElement>("text-field");
 
   textFields.forEach((textField, key) => {
     textField.addEventListener("onChange", ((value: CustomEvent) => {
@@ -67,8 +69,8 @@ export function bookAddMounted(): void {
     }) as EventListener);
   });
 
-  const form = document.querySelector<HTMLFormElement>("#FrmAddBook");
-  form?.addEventListener("submit", (event) => {
+  const form = document.querySelector("#FrmAddBook") as HTMLFormElement;
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
     handleSubmit();
   });

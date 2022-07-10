@@ -13,6 +13,7 @@ export function homeMounted(): void {
   const alreadyReadBooks = books.filter((book) => book.isComplete);
   const unreadBooks = books.filter((book) => !book.isComplete);
 
+  document.title = "Simpan Buku Favoritmu | myLibrary";
   renderBooks(BookType.AlreadRead, alreadyReadBooks);
   renderBooks(BookType.Unread, unreadBooks);
 }
@@ -29,7 +30,11 @@ function renderBooks(type: BookType, books: IBook[]): void {
         type === BookType.Unread ? "Belum selesai dibaca" : "Selesai dibaca"
       }</p>
 
-      <a class="Link" href="/${type}">Lihat lebih banyak</a>
+      ${
+        books.length > 0
+          ? `<a class="Link" href="/${type}">Lihat lebih banyak</a>`
+          : ""
+      }
     </div>
   `;
 
