@@ -1,8 +1,8 @@
 import { useRouter } from "./utils/router";
 
+import "./assets/scss/style.scss";
 import "./components/search-field";
 import "./components/text-field";
-import "./style.scss";
 
 const router = useRouter();
 
