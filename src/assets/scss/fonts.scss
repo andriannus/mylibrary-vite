@@ -6,6 +6,7 @@
   src: local(""),
     url("../../public/fonts/open-sans-v29-latin-regular.woff2") format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-regular.woff") format("woff");
+  font-display: swap;
 }
 
 /* open-sans-600 - latin */
@@ -16,6 +17,7 @@
   src: local(""),
     url("../../public/fonts/open-sans-v29-latin-600.woff2") format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-600.woff") format("woff");
+  font-display: swap;
 }
 
 /* open-sans-700 - latin */
@@ -26,6 +28,7 @@
   src: local(""),
     url("../../public/fonts/open-sans-v29-latin-700.woff2") format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-700.woff") format("woff");
+  font-display: swap;
 }
 
 /* open-sans-800 - latin */
@@ -36,7 +39,9 @@
   src: local(""),
     url("../../public/fonts/open-sans-v29-latin-800.woff2") format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-800.woff") format("woff");
+  font-display: swap;
 }
+
 /* open-sans-italic - latin */
 @font-face {
   font-family: "Open Sans";
@@ -45,6 +50,7 @@
   src: local(""),
     url("../../public/fonts/open-sans-v29-latin-italic.woff2") format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-italic.woff") format("woff");
+  font-display: swap;
 }
 
 /* open-sans-600italic - latin */
@@ -56,6 +62,7 @@
     url("../../public/fonts/open-sans-v29-latin-600italic.woff2")
       format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-600italic.woff") format("woff");
+  font-display: swap;
 }
 
 /* open-sans-700italic - latin */
@@ -67,6 +74,7 @@
     url("../../public/fonts/open-sans-v29-latin-700italic.woff2")
       format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-700italic.woff") format("woff");
+  font-display: swap;
 }
 
 /* open-sans-800italic - latin */
@@ -78,4 +86,5 @@
     url("../../public/fonts/open-sans-v29-latin-800italic.woff2")
       format("woff2"),
     url("../../public/fonts/open-sans-v29-latin-800italic.woff") format("woff");
+  font-display: swap;
 }
