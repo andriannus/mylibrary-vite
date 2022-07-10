@@ -88,9 +88,12 @@ export function bookAddMounted(): void {
   }
 
   function handleSubmit(): void {
+    const createdAt = new Date().getTime();
     const isComplete = (state.isComplete as string) === "1";
+
     const book: IBook = {
       ...state,
+      createdAt,
       isComplete,
       id: nanoid(10),
       year: parseInt(state.year as string),

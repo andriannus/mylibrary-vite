@@ -16,7 +16,9 @@ export function getBook(bookId: string): IBook | null {
 export function getBooks(): IBook[] {
   if (ls.isExist(MLA_BOOKS)) {
     const books = ls.get<IBook[]>(MLA_BOOKS) as IBook[];
-    return books.reverse();
+    const sortedBooks = books.sort((a, b) => b.createdAt - a.createdAt);
+
+    return sortedBooks;
   } else {
     return [];
   }
