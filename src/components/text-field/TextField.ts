@@ -3,7 +3,6 @@ import scss from "./text-field.scss";
 class TextField extends HTMLElement {
   private input: HTMLInputElement;
   private template: HTMLTemplateElement;
-
   private _value: string;
 
   private get placeholder(): string {

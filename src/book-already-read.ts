@@ -14,7 +14,6 @@ export function bookAlreadyReadMounted(): void {
   handleAlreadyReadBooksContent();
 
   const searchField = document.querySelector("search-field") as HTMLElement;
-
   searchField.addEventListener("onChange", handleSearchChanges);
 }
 

@@ -14,7 +14,6 @@ export function bookUnreadMounted(): void {
   handleUnreadBooksContent();
 
   const searchField = document.querySelector("search-field") as HTMLElement;
-
   searchField.addEventListener("onChange", handleSearchChanges);
 }
 

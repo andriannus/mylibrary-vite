@@ -63,7 +63,7 @@ export function bookAddMounted(): void {
   const textFields = document.querySelectorAll<HTMLElement>("text-field");
 
   textFields.forEach((textField, key) => {
-    textField.addEventListener("onChange", ((value: CustomEvent) => {
+    textField.addEventListener("onChange", ((value: CustomEvent<string>) => {
       state[textFieldKeys[key]] = value.detail;
       handleFormChanges();
     }) as EventListener);
